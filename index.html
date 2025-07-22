@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <title>Dashboard – Proyecto ESM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <style>
     body { padding-bottom: 4rem; background-color: #f4f4f4; }
     h1, h2 { color: #6d4c41; }
     nav { background-color: #795548; }
     nav a { color: #fff !important; }
-    .table thead { background-color: #d7ccc8; }
-    .zone-card {
-      background-color: #efebe9;
-      border: 1px solid #ccc;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
     footer { padding-top: 2rem; font-size: 0.9rem; }
+    .table thead { background-color: #d7ccc8; }
+    .card-custom { margin-bottom: 2rem; }
+    .ficha-box { display: none; }
+    .bg-enviado { background-color: #fff9c4 !important; border: 1px solid #fbc02d; }
+    .bg-cortado { background-color: #dcedc8 !important; border: 1px solid #8bc34a; }
+    .bg-pendiente { background-color: #eeeeee !important; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
@@ -30,134 +31,135 @@
       <a class="navbar-brand text-white" href="#">Proyecto ESM</a>
       <div>
         <a class="nav-link" href="#avance">Avance</a>
-        <a class="nav-link" href="#cajas">Cajas</a>
-        <a class="nav-link" href="#checklist">Checklist</a>
-        <a class="nav-link" href="#zonas">Zonas</a>
-        <a class="nav-link" href="#botones">Detalle por caja</a>
+        <a class="nav-link" href="#modelo">Modelo 3D</a>
+        <a class="nav-link" href="#detalle">Detalle por caja</a>
       </div>
     </div>
   </nav>
 
   <div class="container">
-    <h1 class="mb-4 text-center">📐 Dashboard – Control de instalación</h1>
+    <h1 class="mb-4 text-center">📐 Dashboard – Trazabilidad Visual</h1>
 
-    <!-- Sección: Avance por columna -->
+    <!-- Sección: Avance -->
     <section id="avance">
-      <h2>📊 Avance por columna vertical</h2>
-      <canvas id="columnChart" height="100"></canvas>
+      <h2>📊 Avance por columna</h2>
+      <canvas id="chartColumna" height="100"></canvas>
       <script>
-        new Chart(document.getElementById('columnChart'), {
+        new Chart(document.getElementById('chartColumna'), {
           type: 'bar',
           data: {
-            labels: ['Columna 1', 'Columna 2', 'Columna 3', 'Columna 4'],
+            labels: ['Columna 1', 'Columna 2', 'Columna 3'],
             datasets: [{
               label: '% Instalado',
-              data: [42, 28, 71, 53],
+              data: [55, 32, 71],
               backgroundColor: '#8d6e63'
             }]
           },
           options: {
-            scales: { y: { beginAtZero: true, max: 100 } }
+            scales: {
+              y: { beginAtZero: true, max: 100 }
+            }
           }
         });
       </script>
     </section>
 
-    <!-- Sección: Tabla de cajas -->
-    <section id="cajas" class="card mt-5">
-      <div class="card-body">
-        <h2 class="card-title">📦 Cajas por zona</h2>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Caja</th><th>Columna</th><th>Nivel</th><th>ST-01</th><th>ST-22</th><th>ST-08</th><th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>C1–N1–A</td><td>1</td><td>1</td><td>12</td><td>18</td><td>8</td><td>✅ Instalado</td></tr>
-            <tr><td>C2–N1–A</td><td>2</td><td>1</td><td>20</td><td>12</td><td>6</td><td>🚚 En tránsito</td></tr>
-            <tr><td>C3–N2–B</td><td>3</td><td>2</td><td>38</td><td>0</td><td>0</td><td>🕒 Pendiente</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <!-- Sección: Modelo -->
+    <section id="modelo" class="mt-5">
+      <h2>🧱 Modelo virtual de instalación</h2>
+
+      <!-- Leyenda -->
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Color en modelo</th>
+            <th>Estado</th>
+            <th>Significado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="background-color:#ffff66;">🟨 Amarillo</td>
+            <td>Enviado</td>
+            <td>Empaquetado y enviado a obra</td>
+          </tr>
+          <tr>
+            <td style="background-color:#66ff66;">🟩 Verde</td>
+            <td>Cortado (no enviado)</td>
+            <td>Fabricado, en bodega</td>
+          </tr>
+          <tr>
+            <td style="background-color:#ffffff;">⬜ Blanco</td>
+            <td>Pendiente</td>
+            <td>No cortado ni enviado</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Visor embebido -->
+      <iframe src="https://autode.sk/3IxuHeN" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
     </section>
 
-    <!-- Sección: Checklist diario -->
-    <section id="checklist" class="card mt-5">
-      <div class="card-body">
-        <h2 class="card-title">📅 Checklist diario</h2>
-        <table class="table table-sm">
-          <thead class="table-light">
-            <tr><th>Fecha</th><th>Zona</th><th>Cajas escaneadas</th><th>Avance</th><th>Observaciones</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>22 Jul 2025</td><td>Columna 3</td><td>5 / 6</td><td>83%</td><td>Sin incidentes</td></tr>
-            <tr><td>21 Jul 2025</td><td>Columna 4</td><td>3 / 5</td><td>60%</td><td>Retraso por clima</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Sección: Fichas visuales -->
-    <section id="zonas" class="mt-5">
-      <h2>🔍 Fichas por zona</h2>
-      <div class="zone-card">
-        <h5>Zona: Columna 3 – Nivel 4</h5>
-        <p><strong>Caja:</strong> C3–N4–A</p>
-        <p><strong>Contenido:</strong> ST-01 x12, ST-22 x20, ST-08 x6</p>
-        <p><strong>Estado:</strong> ✅ Instalada – 21 Jul 2025</p>
-      </div>
-      <div class="zone-card">
-        <h5>Zona: Columna 2 – Nivel 2</h5>
-        <p><strong>Caja:</strong> C2–N2–B</p>
-        <p><strong>Contenido:</strong> ST-10 x38</p>
-        <p><strong>Estado:</strong> 🚧 Pendiente</p>
-      </div>
-    </section>
-
-    <!-- Sección: Botones interactivos por caja -->
-    <section id="botones" class="mt-5">
-      <h2>📲 Detalle técnico por caja (vista interactiva)</h2>
+    <!-- Sección: Detalle por caja -->
+    <section id="detalle" class="mt-5">
+      <h2>📦 Detalle por caja</h2>
       <div class="row mb-4">
         <div class="col-md-4 mb-2">
-          <button class="btn btn-outline-dark w-100" onclick="mostrarFicha('C1–N1–A')">Caja C1–N1–A</button>
+          <button class="btn btn-outline-dark w-100" onclick="verFicha('C1–N1–A')">Caja C1–N1–A</button>
         </div>
         <div class="col-md-4 mb-2">
-          <button class="btn btn-outline-dark w-100" onclick="mostrarFicha('C2–N2–B')">Caja C2–N2–B</button>
+          <button class="btn btn-outline-dark w-100" onclick="verFicha('C2–N2–B')">Caja C2–N2–B</button>
+        </div>
+        <div class="col-md-4 mb-2">
+          <button class="btn btn-outline-dark w-100" onclick="verFicha('C3–N3–C')">Caja C3–N3–C</button>
         </div>
       </div>
 
-      <!-- Ficha técnica mostrada dinámicamente -->
-      <div id="fichaCaja" class="border p-3 rounded bg-light d-none">
-        <h5 id="tituloFicha"></h5>
-        <p><strong>Ubicación:</strong> <span id="ubicacionFicha"></span></p>
-        <p><strong>Contenido:</strong> <span id="contenidoFicha"></span></p>
-        <p><strong>Estado:</strong> <span id="estadoFicha"></span></p>
-      </div>
+      <div id="fichaContainer"></div>
 
       <script>
-        const fichas = {
+        const cajas = {
           'C1–N1–A': {
             ubicacion: 'Columna 1 – Nivel 1',
-            contenido: 'ST-01 x12, ST-22 x18, ST-08 x8',
-            estado: '✅ Instalada'
+            contenido: 'ST-01 x12, ST-22 x18',
+            estado: 'Enviado',
+            color: 'bg-enviado'
           },
           'C2–N2–B': {
             ubicacion: 'Columna 2 – Nivel 2',
+            contenido: 'ST-08 x6',
+            estado: 'Cortado (no enviado)',
+            color: 'bg-cortado'
+          },
+          'C3–N3–C': {
+            ubicacion: 'Columna 3 – Nivel 3',
             contenido: 'ST-10 x38',
-            estado: '🚧 Pendiente'
+            estado: 'Pendiente',
+            color: 'bg-pendiente'
           }
         };
-        function mostrarFicha(codigo) {
-          const ficha = fichas[codigo];
-          document.getElementById('tituloFicha').innerText = `Ficha: ${codigo}`;
-          document.getElementById('ubicacionFicha').innerText = ficha.ubicacion;
-          document.getElementById('contenidoFicha').innerText = ficha.contenido;
-          document.getElementById('estadoFicha').innerText = ficha.estado;
-          document.getElementById('fichaCaja').classList.remove('d-none');
+
+        function verFicha(codigo) {
+          const f = cajas[codigo];
+          const html = `
+            <div class="card ${f.color} card-custom">
+              <div class="card-body">
+                <h5 class="card-title">📦 ${codigo}</h5>
+                <p><strong>Ubicación:</strong> ${f.ubicacion}</p>
+                <p><strong>Contenido:</strong> ${f.contenido}</p>
+                <p><strong>Estado:</strong> ${f.estado}</p>
+              </div>
+            </div>
+          `;
+          document.getElementById('fichaContainer').innerHTML = html;
         }
       </script>
     </section>
 
     <!-- Footer -->
-    <footer
+    <footer class="text-center mt-5">
+      <p class="text-muted">Proyecto ESM – Dashboard generado por Copilot & Victor 🧱 | Última actualización: Julio 2025</p>
+    </footer>
+  </div>
+</body>
+</html>
