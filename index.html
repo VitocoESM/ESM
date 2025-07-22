@@ -2,48 +2,78 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard – Proyecto de Instalación</title>
+  <title>Dashboard – Proyecto ESM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Estilos -->
   <style>
-    body { padding: 2rem; background-color: #f8f9fa; }
+    body { padding-bottom: 4rem; background-color: #f4f4f4; }
     h1, h2 { color: #6d4c41; }
-    .card { margin-top: 2rem; }
+    nav { background-color: #795548; }
+    nav a { color: #fff !important; }
     .table thead { background-color: #d7ccc8; }
-    .zone-card { background-color: #efebe9; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+    .zone-card {
+      background-color: #efebe9;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    footer { padding-top: 2rem; font-size: 0.9rem; }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">Proyecto ESM</a>
+      <div>
+        <a class="nav-link" href="#avance">Avance</a>
+        <a class="nav-link" href="#cajas">Cajas</a>
+        <a class="nav-link" href="#checklist">Checklist</a>
+        <a class="nav-link" href="#zonas">Zonas</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
-    <h1 class="mb-4 text-center">📐 Dashboard – Proyecto ESM</h1>
+    <h1 class="mb-4 text-center">📐 Dashboard – Control de instalación</h1>
 
-    <!-- Chart: avance por columna -->
-    <h2>Avance por columna vertical</h2>
-    <canvas id="columnChart" height="100"></canvas>
-    <script>
-      new Chart(document.getElementById('columnChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Columna 1', 'Columna 2', 'Columna 3', 'Columna 4'],
-          datasets: [{
-            label: '% Instalado',
-            data: [42, 28, 71, 53],
-            backgroundColor: '#8d6e63'
-          }]
-        },
-        options: {
-          scales: {
-            y: { beginAtZero: true, max: 100 }
+    <!-- Avance por columna -->
+    <section id="avance">
+      <h2>📊 Avance por columna vertical</h2>
+      <canvas id="columnChart" height="100"></canvas>
+      <script>
+        new Chart(document.getElementById('columnChart'), {
+          type: 'bar',
+          data: {
+            labels: ['Columna 1', 'Columna 2', 'Columna 3', 'Columna 4'],
+            datasets: [{
+              label: '% Instalado',
+              data: [42, 28, 71, 53],
+              backgroundColor: '#8d6e63'
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true, max: 100 }
+            }
           }
-        }
-      });
-    </script>
+        });
+      </script>
+    </section>
 
-    <!-- Tabla por caja -->
-    <div class="card">
+    <!-- Tabla de cajas -->
+    <section id="cajas" class="card mt-5">
       <div class="card-body">
-        <h2 class="card-title">📋 Control de cajas por zona</h2>
+        <h2 class="card-title">📦 Cajas por zona</h2>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -57,33 +87,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>C1–N1–A</td>
-              <td>1</td>
-              <td>1</td>
-              <td>12</td>
-              <td>18</td>
-              <td>8</td>
-              <td>✅ Instalado</td>
-            </tr>
-            <tr>
-              <td>C2–N1–A</td>
-              <td>2</td>
-              <td>1</td>
-              <td>20</td>
-              <td>12</td>
-              <td>6</td>
-              <td>🚚 En tránsito</td>
-            </tr>
+            <tr><td>C1–N1–A</td><td>1</td><td>1</td><td>12</td><td>18</td><td>8</td><td>✅ Instalado</td></tr>
+            <tr><td>C2–N1–A</td><td>2</td><td>1</td><td>20</td><td>12</td><td>6</td><td>🚚 En tránsito</td></tr>
+            <tr><td>C3–N2–B</td><td>3</td><td>2</td><td>38</td><td>0</td><td>0</td><td>🕒 Pendiente</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
 
     <!-- Checklist diario -->
-    <div class="card">
+    <section id="checklist" class="card mt-5">
       <div class="card-body">
-        <h2 class="card-title">📅 Checklist de instalación diaria</h2>
+        <h2 class="card-title">📅 Checklist diario</h2>
         <table class="table table-sm">
           <thead class="table-light">
             <tr><th>Fecha</th><th>Zona</th><th>Cajas escaneadas</th><th>Avance</th><th>Observaciones</th></tr>
@@ -94,25 +109,28 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
 
-    <!-- Tarjetas visuales por zona -->
-    <h2 class="mt-5">🔍 Fichas por zona</h2>
-    <div class="zone-card">
-      <h5>Zona: Columna 3 – Nivel 4</h5>
-      <p><strong>Caja:</strong> C3–N4–A</p>
-      <p><strong>Contenido:</strong> ST-01 x12, ST-22 x20, ST-08 x6</p>
-      <p><strong>Estado:</strong> ✅ Instalada – 21 Jul 2025</p>
-    </div>
-    <div class="zone-card">
-      <h5>Zona: Columna 2 – Nivel 2</h5>
-      <p><strong>Caja:</strong> C2–N2–B</p>
-      <p><strong>Contenido:</strong> ST-10 x38</p>
-      <p><strong>Estado:</strong> 🚧 Pendiente</p>
-    </div>
+    <!-- Fichas por zona -->
+    <section id="zonas" class="mt-5">
+      <h2>🔍 Fichas por zona</h2>
+      <div class="zone-card">
+        <h5>Zona: Columna 3 – Nivel 4</h5>
+        <p><strong>Caja:</strong> C3–N4–A</p>
+        <p><strong>Contenido:</strong> ST-01 x12, ST-22 x20, ST-08 x6</p>
+        <p><strong>Estado:</strong> ✅ Instalada – 21 Jul 2025</p>
+      </div>
+      <div class="zone-card">
+        <h5>Zona: Columna 2 – Nivel 2</h5>
+        <p><strong>Caja:</strong> C2–N2–B</p>
+        <p><strong>Contenido:</strong> ST-10 x38</p>
+        <p><strong>Estado:</strong> 🚧 Pendiente</p>
+      </div>
+    </section>
 
+    <!-- Footer -->
     <footer class="text-center mt-5">
-      <p class="text-muted">Proyecto ESM – Dashboard creado por Copilot & Victor 🧱</p>
+      <p class="text-muted">Proyecto ESM – Dashboard generado por Copilot & Victor 🧱 | Última actualización: Julio 2025</p>
     </footer>
   </div>
 </body>
