@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>Dashboard – Proyecto ESM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap + Chart.js -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -17,7 +15,6 @@
     footer { padding-top: 2rem; font-size: 0.9rem; }
     .table thead { background-color: #d7ccc8; }
     .card-custom { margin-bottom: 2rem; }
-    .ficha-box { display: none; }
     .bg-enviado { background-color: #fff9c4 !important; border: 1px solid #fbc02d; }
     .bg-cortado { background-color: #dcedc8 !important; border: 1px solid #8bc34a; }
     .bg-pendiente { background-color: #eeeeee !important; border: 1px solid #ccc; }
@@ -40,7 +37,7 @@
   <div class="container">
     <h1 class="mb-4 text-center">📐 Dashboard – Trazabilidad Visual</h1>
 
-    <!-- Sección: Avance -->
+    <!-- Avance por columna -->
     <section id="avance">
       <h2>📊 Avance por columna</h2>
       <canvas id="chartColumna" height="100"></canvas>
@@ -64,7 +61,7 @@
       </script>
     </section>
 
-    <!-- Sección: Modelo 3D -->
+    <!-- Modelo 3D -->
     <section id="modelo-3d" class="mt-5">
       <h2>🧱 Modelo virtual embebido (.glb)</h2>
 
@@ -96,11 +93,11 @@
         </tbody>
       </table>
 
-      <!-- Visor Three.js -->
+      <!-- Canvas del visor -->
       <canvas id="visorCanvas" style="width:100%; height:500px;"></canvas>
     </section>
 
-    <!-- Sección: Fichas por caja -->
+    <!-- Detalle por caja -->
     <section id="detalle" class="mt-5">
       <h2>📦 Detalle por caja</h2>
       <div class="row mb-4">
@@ -155,40 +152,6 @@
         }
       </script>
     </section>
-<!-- Visor Three.js -->
-<canvas id="visorCanvas" style="width:100%; height:500px;"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/GLTFLoader.js"></script>
-
-<script>
-  const canvas = document.getElementById('visorCanvas');
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf4f4f4);
-
-  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-  camera.position.set(0, 2, 5);
-
-  const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
-  scene.add(light);
-
-  const loader = new THREE.GLTFLoader();
-  loader.load('assets/Foundation 2.glb', function (gltf) {
-    scene.add(gltf.scene);
-  }, undefined, function (error) {
-    console.error('Error al cargar el modelo:', error);
-  });
-
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-  animate();
-</script>
 
     <!-- Footer -->
     <footer class="text-center mt-5">
@@ -196,7 +159,7 @@
     </footer>
   </div>
 
-  <!-- Scripts Three.js al final -->
+  <!-- Scripts Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/GLTFLoader.js"></script>
   <script>
